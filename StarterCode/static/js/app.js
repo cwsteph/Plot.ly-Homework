@@ -54,8 +54,7 @@ var trace2 = {
 
       //Demographic Panel
 
-  var demo_filter = data.metadata.filter(obj=>obj.id == id);
-  console.log(demo_filter)
+  // 
 
   });
 
@@ -63,28 +62,30 @@ var trace2 = {
 
 }
 
+function getData(id) {
+    d3.json("samples.json").then((data) => {
 
+      demographicTable.html("");
 
+      var demo_filter = data.metadata.filter(obj=>obj.id.toString() === id)[0];
 
+      console.log(demo_filter);
+      
+      
+      demo_filter.forEach(([key, value]) => {
+      demographicTable.append("h5").text(`${key}: ${value}`);
+    
+    });
 
-
-
-
-
+  });
+}
 
 
 //Update Dropdown
 
-
-
-// Call updatePlotly() when a change takes place to the DOM
-
-// This function is called when a dropdown menu item is selected
 function optionChanged(id) {
-  // Use D3 to select the dropdown menu
   create_charts(id)
 }
-// Initializes the page with a default plot
 function init() {
     d3.json("samples.json").then(function(data) {
     var dropdown = d3.select("#selDataset")    
